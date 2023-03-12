@@ -2,9 +2,11 @@ function openMenu(bool) {
     if (bool) {
         document.querySelector('.body-menu')
             .classList.add('active')
+            addParam('#menu')
     } else {
         document.querySelector('.body-menu')
             .classList.remove('active')
+        goToInHistory(-1)
     }
 }
 
@@ -12,9 +14,11 @@ function openSearch(bool) {
     if (bool) {
         document.querySelector('.body-search')
             .classList.add('active')
+            addParam('#search')
     } else {
         document.querySelector('.body-search')
             .classList.remove('active')
+        goToInHistory(-1)
     }
 }
 
@@ -47,3 +51,16 @@ function searchPosts(value) {
         })
     })
 }
+
+function addParam(value) {
+    const link = document.createElement('a')
+    link.href = value
+    link.click()
+}
+
+const goToInHistory = num => history.go(num)
+
+window.addEventListener('popstate', event => {
+    event.preventDefault()
+    closeMenuAndSearch()
+})
