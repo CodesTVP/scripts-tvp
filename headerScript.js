@@ -6,6 +6,10 @@ function openMenu(bool) {
     } else if (bool === false) {
         document.querySelector('.body-menu')
             .classList.remove('active')
+    } else {
+        document.querySelector('.body-menu')
+            .classList.remove('active')
+        goToInHistory(-1)
     }
 }
 
@@ -17,12 +21,16 @@ function openSearch(bool) {
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
+    } else {
+        document.querySelector('.body-search')
+            .classList.remove('active')
+        goToInHistory(-1)
     }
 }
 
 function closeMenuAndSearch() {
-    openMenu(false)
-    openSearch(false)
+    openMenu('return')
+    openSearch('return')
 }
 
 function keyPressedOnInput(event) {
@@ -58,8 +66,17 @@ function addParam(param) {
     window.history.pushState(param.replace('#', ''), param, url)
 }
 
+var currentPagePosition = window.history.length
+
 window.addEventListener('popstate', function (event) {
-    closeMenuAndSearch()
+    var previousPagePosition = currentPagePosition
+    currentPagePosition = window.history.length
+
+    if (currentPagePosition < previousPagePosition) {
+        console.log("Usuário clicou no botão 'voltar'")
+    } else {
+        console.log("Usuário clicou no botão 'avançar'")
+    }
 })
 
 window.addEventListener('scroll', () => {
@@ -70,3 +87,31 @@ window.addEventListener('scroll', () => {
         document.querySelector('header.body-header').classList.remove('compressed')
     }
 })
+
+function typeBackwards(text, id) {
+    let reversedText = text.split('').reverse().join('')
+    let element = document.getElementById(id)
+    let typedText = ''
+    for (let i = reversedText.length - 1; i >= 0; i--) {
+        setTimeout(() => {
+            typedText = reversedText[i] + typedText
+            element.innerHTML = typedText
+            if (i === (reversedText.length - 1)) {
+                setTimeout(() => {
+                    for (let i = 0; i < reversedText.length; i++) {
+                        text = text
+                        setTimeout(() => {
+                            typedText = text.slice(1)
+                            text = typedText
+                            element.innerHTML = typedText
+                        }, i * 20)
+                    }
+                }, 1500)
+            }
+        }, i * 20)
+    }
+}
+
+setTimeout(() => {
+    typeBackwards('TV Povão, a tv web na sua mão!', 'animation-text')
+}, 2000);
