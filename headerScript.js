@@ -23,7 +23,6 @@ function openSearch(bool) {
 function closeMenuAndSearch() {
     openMenu(false)
     openSearch(false)
-    goToInHistory(-1)
 }
 
 function keyPressedOnInput(event) {
