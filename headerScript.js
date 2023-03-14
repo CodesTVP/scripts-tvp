@@ -1,8 +1,11 @@
 function openMenu(bool) {
-    if (bool) {
+    if (bool === true) {
         document.querySelector('.body-menu')
             .classList.add('active')
-            addParam('#menu')
+        addParam('#menu')
+    } else if (bool === false) {
+        document.querySelector('.body-menu')
+            .classList.remove('active')
     } else {
         document.querySelector('.body-menu')
             .classList.remove('active')
@@ -11,10 +14,13 @@ function openMenu(bool) {
 }
 
 function openSearch(bool) {
-    if (bool) {
+    if (bool === true) {
         document.querySelector('.body-search')
             .classList.add('active')
-            addParam('#search')
+        addParam('#search')
+    } else if (bool === false) {
+        document.querySelector('.body-search')
+            .classList.remove('active')
     } else {
         document.querySelector('.body-search')
             .classList.remove('active')
@@ -23,8 +29,8 @@ function openSearch(bool) {
 }
 
 function closeMenuAndSearch() {
-    openMenu(false)
-    openSearch(false)
+    openMenu('return')
+    openSearch('return')
 }
 
 function keyPressedOnInput(event) {
@@ -52,15 +58,32 @@ function searchPosts(value) {
     })
 }
 
-function addParam(value) {
-    const link = document.createElement('a')
-    link.href = value
-    link.click()
-}
-
 const goToInHistory = num => history.go(num)
 
-window.addEventListener('popstate', event => {
-    event.preventDefault()
-    closeMenuAndSearch()
+function addParam(param) {
+    window.location.hash = param
+    let url = window.location.href
+    window.history.pushState(param.replace('#', ''), param, url)
+}
+
+var currentPagePosition = window.history.length
+
+window.addEventListener('popstate', function (event) {
+    var previousPagePosition = currentPagePosition
+    currentPagePosition = window.history.length
+
+    if (currentPagePosition < previousPagePosition) {
+        console.log("Usuário clicou no botão 'voltar'")
+    } else {
+        console.log("Usuário clicou no botão 'avançar'")
+    }
+})
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 100) {
+        if (!document.querySelector('header.body-header').classList.contains('compressed'))
+            document.querySelector('header.body-header').classList.add('compressed')
+    } else {
+        document.querySelector('header.body-header').classList.remove('compressed')
+    }
 })
