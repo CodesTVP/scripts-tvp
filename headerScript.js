@@ -6,9 +6,6 @@ function openMenu(bool) {
     } else if (bool === false) {
         document.querySelector('.body-menu')
             .classList.remove('active')
-    } else {
-        document.querySelector('.body-menu')
-            .classList.remove('active')
         goToInHistory(-1)
     }
 }
@@ -21,16 +18,13 @@ function openSearch(bool) {
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
-    } else {
-        document.querySelector('.body-search')
-            .classList.remove('active')
         goToInHistory(-1)
     }
 }
 
 function closeMenuAndSearch() {
-    openMenu('return')
-    openSearch('return')
+    openMenu(false)
+    openSearch(false)
 }
 
 function keyPressedOnInput(event) {
