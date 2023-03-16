@@ -6,7 +6,6 @@ function openMenu(bool) {
     } else if (bool === false) {
         document.querySelector('.body-menu')
             .classList.remove('active')
-        goToInHistory(-1)
     }
 }
 
@@ -18,13 +17,13 @@ function openSearch(bool) {
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
-        goToInHistory(-1)
     }
 }
 
 function closeMenuAndSearch() {
     openMenu(false)
     openSearch(false)
+    goToInHistory(-2)
 }
 
 function keyPressedOnInput(event) {
@@ -60,17 +59,9 @@ function addParam(param) {
     window.history.pushState(param.replace('#', ''), param, url)
 }
 
-var currentPagePosition = window.history.length
-
-window.addEventListener('popstate', function (event) {
-    var previousPagePosition = currentPagePosition
-    currentPagePosition = window.history.length
-
-    if (currentPagePosition < previousPagePosition) {
-        console.log("Usuário clicou no botão 'voltar'")
-    } else {
-        console.log("Usuário clicou no botão 'avançar'")
-    }
+window.addEventListener('popstate', event => {
+    openMenu(false)
+    openSearch(false)
 })
 
 window.addEventListener('scroll', () => {
