@@ -1,21 +1,21 @@
-function openMenu(bool) {
+function openMenu(bool, goAgain = true) {
     if (bool === true) {
         document.querySelector('.body-menu')
             .classList.add('active')
         addParam('#menu')
-        openMenu(true)
+        if (goAgain) openMenu(true, false)
     } else if (bool === false) {
         document.querySelector('.body-menu')
             .classList.remove('active')
     }
 }
 
-function openSearch(bool) {
+function openSearch(bool, goAgain = true) {
     if (bool === true) {
         document.querySelector('.body-search')
             .classList.add('active')
         addParam('#search')
-        openSearch(true)
+        if (goAgain) openSearch(true, false)
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
