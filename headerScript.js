@@ -3,6 +3,7 @@ function openMenu(bool) {
         document.querySelector('.body-menu')
             .classList.add('active')
         addParam('#menu')
+        openMenu(true)
     } else if (bool === false) {
         document.querySelector('.body-menu')
             .classList.remove('active')
@@ -14,6 +15,7 @@ function openSearch(bool) {
         document.querySelector('.body-search')
             .classList.add('active')
         addParam('#search')
+        openSearch(true)
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
