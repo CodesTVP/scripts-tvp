@@ -1,7 +1,6 @@
 let openedNow = false
 
 function openMenu(bool) {
-    console.log('Exec')
     if (bool === true) {
         openedNow = true
         document.querySelector('.body-menu')
@@ -61,6 +60,7 @@ function searchPosts(value) {
 const goToInHistory = num => history.go(num)
 
 function addParam(param) {
+    console.log('Exec')
     window.location.hash = param
     let url = window.location.href
     window.history.pushState(param.replace('#', ''), param, url)
