@@ -1,10 +1,12 @@
 function openMenu(bool, goAgain = true) {
     if (bool === true) {
+        console.log(true)
         document.querySelector('.body-menu')
-            .classList.add('active')
+        .classList.add('active')
         addParam('#menu')
         if (goAgain) openMenu(true, false)
     } else if (bool === false) {
+        console.log(false)
         document.querySelector('.body-menu')
             .classList.remove('active')
     }
