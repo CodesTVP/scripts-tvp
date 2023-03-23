@@ -29,7 +29,7 @@ function openSearch(bool) {
 function closeMenuAndSearch() {
     openMenu(false)
     openSearch(false)
-    goToInHistory(-3)
+    goToInHistory(-1)
 }
 
 function keyPressedOnInput(event) {
@@ -60,10 +60,10 @@ function searchPosts(value) {
 const goToInHistory = num => history.go(num)
 
 function addParam(param) {
-    console.log('Exec')
-    window.location.hash = param
     let url = window.location.href
-    window.history.pushState(param.replace('#', ''), param, url)
+    let lastChar = url.charAt(url.length - 1)
+    if (lastChar === '/') url.slice(0, -1)
+    window.history.pushState(param.replace('#', ''), param, url + param)
 }
 
 window.addEventListener('popstate', event => {
