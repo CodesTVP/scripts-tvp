@@ -1,6 +1,7 @@
 let openedNow = false
 
 function openMenu(bool) {
+    console.log('Exec')
     if (bool === true) {
         openedNow = true
         document.querySelector('.body-menu')
