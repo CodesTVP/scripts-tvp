@@ -36,4 +36,4 @@ lisSocialMedia.forEach(li => {
 
 const divSocialFooterHTML = document.getElementById('LinkList2').innerHTML
 document.getElementById('LinkList2').remove()
-document.querySelector('.body-footer').innerHTML += divSocialFooterHTML
+document.querySelector('.body-footer .utilits-elements').innerHTML += divSocialFooterHTML
