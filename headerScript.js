@@ -1,23 +1,25 @@
-function openMenu(bool, goAgain = true) {
+const openedNow = false
+
+function openMenu(bool) {
     if (bool === true) {
-        console.log(true)
+        openedNow = true
         document.querySelector('.body-menu')
         .classList.add('active')
         addParam('#menu')
-        if (goAgain) openMenu(true, false)
+        openedNow = false
     } else if (bool === false) {
-        console.log(false)
         document.querySelector('.body-menu')
-            .classList.remove('active')
+        .classList.remove('active')
     }
 }
 
-function openSearch(bool, goAgain = true) {
+function openSearch(bool) {
     if (bool === true) {
+        openedNow = true
         document.querySelector('.body-search')
-            .classList.add('active')
+        .classList.add('active')
         addParam('#search')
-        if (goAgain) openSearch(true, false)
+        openedNow = false
     } else if (bool === false) {
         document.querySelector('.body-search')
             .classList.remove('active')
@@ -64,8 +66,10 @@ function addParam(param) {
 }
 
 window.addEventListener('popstate', event => {
-    openMenu(false)
-    openSearch(false)
+    if (!openedNow) {
+        openMenu(false)
+        openSearch(false)
+    }
 })
 
 window.addEventListener('scroll', () => {
