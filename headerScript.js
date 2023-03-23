@@ -1,4 +1,4 @@
-const openedNow = false
+let openedNow = false
 
 function openMenu(bool) {
     if (bool === true) {
