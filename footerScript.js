@@ -13,7 +13,7 @@ LabelUlLis.forEach((li, i) => {
         finalLabelUl1.appendChild(li)
     } else if (i >= 8 && i < 16) {
         finalLabelUl2.appendChild(li)
-    } else if (i >= 16) {
+    } else if (i >= 16 && i <= 23) {
         finalLabelUl3.appendChild(li)
     }
 })
