@@ -16,6 +16,8 @@ document.getElementById('Label1').appendChild(finalLabelUl1)
 document.getElementById('Label1').appendChild(finalLabelUl2)
 document.getElementById('Label1').appendChild(finalLabelUl3)
 
+const lisSocialMedia = document.querySelectorAll('.social-media li')
+
 lisSocialMedia.forEach(li => {
     const arrayData = li.textContent.split('/')
     li.style.setProperty('--color', arrayData[2])
