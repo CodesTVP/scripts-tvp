@@ -108,4 +108,4 @@ function typeBackwards(text, id) {
 
 setTimeout(() => {
     typeBackwards('TV Povão, a tv web na sua mão!', 'animation-text')
-}, 2000);
+}, 2000)
