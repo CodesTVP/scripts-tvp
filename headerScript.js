@@ -39,7 +39,6 @@ function keyPressedOnInput(event) {
     ulElement.innerHTML = ''
     searchPosts(value)
         .then(results => results.map(post => {
-            console.log(post)
             return `<li class="suggestion"><a href="${post.url}"><span>${post.title}</span></a></li>`
         }))
         .then(titles => titles.forEach(title => {
