@@ -121,4 +121,4 @@ function typeBackwards(text, id) {
 
 window.addEventListener('DOMContentLoaded', () => setTimeout(() => {
     typeBackwards('TV Povão, a tv web na sua mão!', 'animation-text')
-}, 2000))
+}, 500))
