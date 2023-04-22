@@ -36,7 +36,7 @@ function keyPressedOnInput(event) {
     const value = event.target.value
     const element = event.target
     const ulElement = document.querySelector('.search-suggestions')
-    $(ulElement).empty()
+    ulElement.innerHTML = ''
     searchPosts(value)
         .then(results => results.map(post => {
             console.log(post)
@@ -49,11 +49,25 @@ function keyPressedOnInput(event) {
 
 function searchPosts(value) {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            url: `https://www.googleapis.com/blogger/v3/blogs/7227783462440633533/posts/search?q=${encodeURI(value)}&key=AIzaSyCpzlcWPumI3Xc_emuT_aTtuizap0UfB7E`,
-            method: 'get',
-            success: (data) => resolve(data.items)
-        })
+        ajax(`https://www.googleapis.com/blogger/v3/blogs/7227783462440633533/posts/search?q=${encodeURI(value)}&key=AIzaSyCpzlcWPumI3Xc_emuT_aTtuizap0UfB7E`)
+            .then(data => resolve(data.items))
+    })
+}
+
+function ajax(url) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject(xhr.status);
+                }
+            }
+        };
+        xhr.open('GET', url);
+        xhr.send();
     })
 }
 
