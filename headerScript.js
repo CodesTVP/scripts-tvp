@@ -4,12 +4,12 @@ function openMenu(bool) {
     if (bool === true) {
         openedNow = true
         document.querySelector('.body-menu')
-        .classList.add('active')
+            .classList.add('active')
         addParam('#menu')
         openedNow = false
     } else if (bool === false) {
         document.querySelector('.body-menu')
-        .classList.remove('active')
+            .classList.remove('active')
     }
 }
 
@@ -17,7 +17,7 @@ function openSearch(bool) {
     if (bool === true) {
         openedNow = true
         document.querySelector('.body-search')
-        .classList.add('active')
+            .classList.add('active')
         addParam('#search')
         openedNow = false
     } else if (bool === false) {
@@ -119,6 +119,6 @@ function typeBackwards(text, id) {
     }
 }
 
-setTimeout(() => {
+window.addEventListener('DOMContentLoaded', () => setTimeout(() => {
     typeBackwards('TV Povão, a tv web na sua mão!', 'animation-text')
-}, 2000)
+}, 2000))
