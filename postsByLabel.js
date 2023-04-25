@@ -37,7 +37,7 @@ function displayGaleries(data) {
             return `<div class="gallery-post-item">${itemInHtmlString}</div>`;
         });
         const galleryTitle = `<div class="gallery-title"><div class="filter-label"><a href="https://www.tvpovao.com.br/search/label/${glrLabel}"><div class="little-ball"></div><span>${glrLabel}</span></a></div></div>`;
-        const galleryContent = `<div class="gallery-content">${postsInHtmlString.join(
+        const galleryContent = `<div class="gallery-content scrollable">${postsInHtmlString.join(
             ''
         )}</div>`;
         const gallery = `<div class="posts-label-gallery">${galleryTitle + galleryContent
