@@ -22,7 +22,7 @@ li.querySelector('a').style.setProperty('--color',arrayData[2])
 li.querySelector('a').innerHTML=`<i class="${arrayData[1]}"></i><span>${arrayData[0]}</span>`})
 const divSocialFooterHTML=document.getElementById('LinkList2').innerHTML
 document.getElementById('LinkList2').remove()
-document.querySelector('.body-footer .utilits-elements').innerHTML+=divSocialFooterHTML
+document.querySelector('.body-footer .utilities-elements').innerHTML+=divSocialFooterHTML
 const texts=document.querySelector('#copyright #Text1 .widget-content').textContent.split('/')
 document.getElementById('copyright').innerHTML=''
 texts.forEach(text=>{const p=document.createElement('p')

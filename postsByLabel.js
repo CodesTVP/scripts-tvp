@@ -19,7 +19,7 @@ for (let i = 0; i < posts.length; i++) {
     if ((i + 2) % 3 === 0) selectedPosts.push(posts[i]);
 }
 
-function displayGaleries(data) {
+function displayGalleries(data) {
     data.forEach((obj, index) => {
         const posts = obj.feed.entry;
         const glrLabel = decodeURIComponent(
@@ -28,7 +28,7 @@ function displayGaleries(data) {
         const postsInHtmlString = posts.map((post) => {
             const postTitle = post.title.$t;
             const postMedia = post.media$thumbnail.url;
-            const improvedPostMedia = replaceForBost(postMedia);
+            const improvedPostMedia = replaceWithBetter(postMedia);
             const postLink = post.link[4].href;
             const imgHtmlString = `<div class="glr-post-img" style="background-image: url('${improvedPostMedia}')"></div>`;
             const titleHtmlString = `<div class="glr-post-title"><div><span>${postTitle}</span></div></div>`;
@@ -84,11 +84,11 @@ function scrollDiv() {
 const pushData = (data) => {
     data.labelIndex = index;
     results.push(data);
-    if (results.length === labels.length) displayGaleries(results);
+    if (results.length === labels.length) displayGalleries(results);
     index++;
 };
 
-const replaceForBost = (string) => {
+const replaceWithBetter = (string) => {
     let newString = string.toString().split('/');
     if (newString[7]) newString[7] = 'w1200-h630-p-k-no-nu';
     return newString.join('/');
