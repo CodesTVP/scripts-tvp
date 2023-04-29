@@ -1,9 +1,8 @@
 function isPostPage(){const bodyClass=document.body.classList;return bodyClass.contains('item-view')}
 function getAds(){return new Promise((resolve,reject)=>{fetch('https://serve-ads.onrender.com').then((response)=>response.json()).then((json)=>resolve(json)).catch((err)=>reject(err))})}
 function filterAds(object){const postPage=isPostPage()
-const ifPostPage=postPage&&ad.pages.includes('post')
-const ifHomePage=!postPage&&ad.pages.includes('home')
-const ads={adsAnchor:[],adsHeader:[],adsMain:[],adsSideBar:[],adsSquares:[],adsFooter:[],adsFloating:[],};object.forEach((ad)=>{if(ifPostPage||ifHomePage){if(ad.local.includes('anchor'))
+const ads={adsAnchor:[],adsHeader:[],adsMain:[],adsSideBar:[],adsSquares:[],adsFooter:[],adsFloating:[],};object.forEach((ad)=>{const ifPostPage=postPage&&ad.pages.includes('post');
+const ifHomePage=!postPage&&ad.pages.includes('home');if(ifPostPage||ifHomePage){if(ad.local.includes('anchor'))
 ads.adsAnchor.push(ad);if(ad.local.includes('header'))
 ads.adsHeader.push(ad);if(ad.local.includes('main'))
 ads.adsMain.push(ad);if(ad.local.includes('sidebar'))

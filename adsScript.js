@@ -14,8 +14,6 @@ function getAds() {
 
 function filterAds(object) {
     const postPage = isPostPage()
-    const ifPostPage = postPage && ad.pages.includes('post')
-    const ifHomePage = !postPage && ad.pages.includes('home')
     const ads = {
         adsAnchor: [],
         adsHeader: [],
@@ -26,6 +24,8 @@ function filterAds(object) {
         adsFloating: [],
     };
     object.forEach((ad) => {
+        const ifPostPage = postPage && ad.pages.includes('post')
+        const ifHomePage = !postPage && ad.pages.includes('home')
         if (ifPostPage || ifHomePage) {
             if (ad.local.includes('anchor'))
                 ads.adsAnchor.push(ad);
