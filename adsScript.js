@@ -13,6 +13,9 @@ function getAds() {
 }
 
 function filterAds(object) {
+    const postPage = isPostPage()
+    const ifPostPage = postPage && ad.pages.includes('post')
+    const ifHomePage = !postPage && ad.pages.includes('home')
     const ads = {
         adsAnchor: [],
         adsHeader: [],
@@ -23,20 +26,22 @@ function filterAds(object) {
         adsFloating: [],
     };
     object.forEach((ad) => {
-        if (ad.local.includes('anchor'))
-            ads.adsAnchor.push(ad);
-        if (ad.local.includes('header'))
-            ads.adsHeader.push(ad);
-        if (ad.local.includes('main'))
-            ads.adsMain.push(ad);
-        if (ad.local.includes('sidebar'))
-            ads.adsSideBar.push(ad);
-        if (ad.local.includes('squares'))
-            ads.adsSquares.push(ad);
-        if (ad.local.includes('footer'))
-            ads.adsFooter.push(ad);
-        if (ad.local.includes('floating'))
-            ads.adsFloating.push(ad);
+        if (ifPostPage || ifHomePage) {
+            if (ad.local.includes('anchor'))
+                ads.adsAnchor.push(ad);
+            if (ad.local.includes('header'))
+                ads.adsHeader.push(ad);
+            if (ad.local.includes('main'))
+                ads.adsMain.push(ad);
+            if (ad.local.includes('sidebar'))
+                ads.adsSideBar.push(ad);
+            if (ad.local.includes('squares'))
+                ads.adsSquares.push(ad);
+            if (ad.local.includes('footer'))
+                ads.adsFooter.push(ad);
+            if (ad.local.includes('floating'))
+                ads.adsFloating.push(ad);
+        }
     });
     return ads;
 }
