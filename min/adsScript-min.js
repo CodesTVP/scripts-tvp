@@ -1,14 +1,15 @@
 function isPostPage(){const bodyClass=document.body.classList;return bodyClass.contains('item-view')}
 function getAds(){return new Promise((resolve,reject)=>{fetch('https://serve-ads.onrender.com').then((response)=>response.json()).then((json)=>resolve(json)).catch((err)=>reject(err))})}
 function filterAds(object){const postPage=isPostPage()
-const ads={adsAnchor:[],adsHeader:[],adsMain:[],adsSideBar:[],adsSquares:[],adsFooter:[],adsFloating:[],};object.forEach((ad)=>{const ifPostPage=postPage&&ad.pages.includes('post');
-const ifHomePage=!postPage&&ad.pages.includes('home');if(ifPostPage||ifHomePage){if(ad.local.includes('anchor'))
-ads.adsAnchor.push(ad);if(ad.local.includes('header'))
-ads.adsHeader.push(ad);if(ad.local.includes('main'))
-ads.adsMain.push(ad);if(ad.local.includes('sidebar'))
-ads.adsSideBar.push(ad);if(ad.local.includes('squares'))
-ads.adsSquares.push(ad);if(ad.local.includes('footer'))
-ads.adsFooter.push(ad);if(ad.local.includes('floating'))
+const ads={adsAnchor:[],adsHeader:[],adsMain:[],adsSideBar:[],adsSquares:[],adsFooter:[],adsFloating:[],};object.forEach((ad)=>{const ifPostPage=postPage&&ad.pages.includes('post')
+const ifHomePage=!postPage&&ad.pages.includes('home')
+if(ifPostPage||ifHomePage){if(ad.local.includes('anchor')&&new Date()<=new Date(ad.validity))
+ads.adsAnchor.push(ad);if(ad.local.includes('header')&&new Date()<=new Date(ad.validity))
+ads.adsHeader.push(ad);if(ad.local.includes('main')&&new Date()<=new Date(ad.validity))
+ads.adsMain.push(ad);if(ad.local.includes('sidebar')&&new Date()<=new Date(ad.validity))
+ads.adsSideBar.push(ad);if(ad.local.includes('squares')&&new Date()<=new Date(ad.validity))
+ads.adsSquares.push(ad);if(ad.local.includes('footer')&&new Date()<=new Date(ad.validity))
+ads.adsFooter.push(ad);if(ad.local.includes('floating')&&new Date()<=new Date(ad.validity))
 ads.adsFloating.push(ad)}});return ads}
 function displayAds(obj){const adsAnchorDiv=document.querySelector('.anchor-ads');const adsHeaderDiv=document.querySelector('.header-ads');const adsMainDiv=document.querySelectorAll('.main-ads');const adsSidebarDiv=document.querySelector('.sidebar-ads');const adsSquareDiv=document.querySelector('.square-ads');const adsFooterDiv=document.querySelector('.footer-ads');const adsFloatingDiv=document.querySelector('.floating-ads');adsOneAtATime(adsAnchorDiv,obj.adsAnchor);adsMultipleAtATime(adsHeaderDiv,obj.adsHeader,3);adsMultipleAtATime(adsSidebarDiv,obj.adsSideBar,5);adsMainDiv.forEach((div)=>adsOneAtATime(div,obj.adsMain));adsMultipleAtATime(adsSquareDiv,obj.adsSquares,6);adsOneAtATime(adsFooterDiv,obj.adsFooter);adsOneAtATime(adsFloatingDiv,obj.adsFloating)}
 function adsOneAtATime(elem,arr){if(arr.length===1){const divAd=document.createElement('div');divAd.classList.add('ad');divAd.id=arr[0].id;const linkAd=document.createElement('a');linkAd.href=arr[0].link;linkAd.target='_blank';const imgAd=document.createElement('img');imgAd.src=arr[0].photoURL;imgAd.alt=`Banner do anúncio ${arr[0].name}`;linkAd.appendChild(imgAd);divAd.appendChild(linkAd);elem.appendChild(divAd)}else if(arr.length>1){let index=Math.floor(Math.random()*(arr.length-0)+0);function changeAd(){elem.querySelectorAll('.ad').forEach((ad)=>ad.remove());const divAd=document.createElement('div');divAd.classList.add('ad');divAd.id=arr[index].id;const linkAd=document.createElement('a');linkAd.href=arr[index].link;linkAd.target='_blank';const imgAd=document.createElement('img');imgAd.src=arr[index].photoURL;imgAd.alt=`Banner do anúncio ${arr[index].name}`;linkAd.appendChild(imgAd);divAd.appendChild(linkAd);elem.appendChild(divAd);index=Math.floor(Math.random()*(arr.length-0)+0)}

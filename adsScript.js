@@ -27,19 +27,26 @@ function filterAds(object) {
         const ifPostPage = postPage && ad.pages.includes('post')
         const ifHomePage = !postPage && ad.pages.includes('home')
         if (ifPostPage || ifHomePage) {
-            if (ad.local.includes('anchor'))
+            if (ad.local.includes('anchor') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsAnchor.push(ad);
-            if (ad.local.includes('header'))
+            if (ad.local.includes('header') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsHeader.push(ad);
-            if (ad.local.includes('main'))
+            if (ad.local.includes('main') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsMain.push(ad);
-            if (ad.local.includes('sidebar'))
+            if (ad.local.includes('sidebar') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsSideBar.push(ad);
-            if (ad.local.includes('squares'))
+            if (ad.local.includes('squares') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsSquares.push(ad);
-            if (ad.local.includes('footer'))
+            if (ad.local.includes('footer') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsFooter.push(ad);
-            if (ad.local.includes('floating'))
+            if (ad.local.includes('floating') && 
+                new Date() <= new Date(ad.validity))
                 ads.adsFloating.push(ad);
         }
     });
