@@ -12,10 +12,10 @@ const observer = new IntersectionObserver((entries) => {
 })
 
 ads.forEach(ad => {
+    const id = ad.id
     observer.observe(ad);
     fetch(`https://serve-ads.onrender.com/post?type=prints&id=${id}`, { method: 'POST' })
     ad.onclick = e => {
-        const id = ad.id
         console.log(e)
         fetch(`https://serve-ads.onrender.com/post?type=clicks&id=${id}`, { method: 'POST' })
     }
