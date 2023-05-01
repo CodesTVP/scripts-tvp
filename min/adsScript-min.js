@@ -24,5 +24,15 @@ function initRenderAds(){const divMainAds='<div class="main-ads ads-region"></di
 if((i+2)%3===0)
 posts[i].insertAdjacentHTML('afterend',divMainAds);}else{const lineBreaks=document.querySelectorAll('.post-body br');let numAds=null;if(lineBreaks.length<=4)numAds=1;else if(lineBreaks.length>4&&lineBreaks.length<=8)numAds=2;else if(lineBreaks.length>8&&lineBreaks.length<=12)numAds=3;else if(lineBreaks.length>12)numAds=4;const random=generateRandomArray(0,(lineBreaks.length-3),numAds,3);for(let i=0;i<random.length;i++)
 lineBreaks[random[i]].insertAdjacentHTML('afterend',divMainAds);}
-getAds().then((resp)=>filterAds(resp)).then((ads)=>displayAds(ads))}
+getAds().then((resp)=>filterAds(resp)).then((ads)=>displayAds(ads)).then(()=>initStatistics())}
+function initStatistics(){const ads=document.querySelectorAll('.ad')
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{const id=entry.target.id
+if(entry.isIntersecting)
+setTimeout(()=>{if(entry.isIntersecting)
+fetch(`https://serve-ads.onrender.com/post?type=views&id=${id}`,{method:'POST'})},2000)
+else clearTimeout()})})
+ads.forEach(ad=>{const id=ad.id
+observer.observe(ad);fetch(`https://serve-ads.onrender.com/post?type=prints&id=${id}`,{method:'POST'})
+ad.onclick=e=>{console.log(e)
+fetch(`https://serve-ads.onrender.com/post?type=clicks&id=${id}`,{method:'POST'})}})}
 initRenderAds();document.querySelector('.floating-ads .close').onclick=()=>{const div=document.querySelector('.floating-ads');div.style.transform='scale(0)';setTimeout(()=>(div.style.transform='scale(1)'),15000)};document.querySelector('.anchor-ads .show-hide').onclick=()=>{const div=document.querySelector('.anchor-ads');div.classList.toggle('active');setTimeout(()=>div.classList.add('active'),15000)}
