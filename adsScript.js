@@ -252,9 +252,9 @@ function initStatistics() {
                     db.collection('statistics').doc(id)
                         .set(docData)
                 }
+                const day = new Date().toLocaleDateString().replace(/\//g, '-')
                 db.collection(`statistics/${id}/byDay`).doc(day)
                     .get().then(doc => {
-                        const day = new Date().toLocaleDateString().replace(/\//g, '-')
                         if (doc.exists) {
                             const dataDay = doc.data()
                             data[type] += 1
