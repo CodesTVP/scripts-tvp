@@ -238,7 +238,7 @@ function initStatistics() {
         ad.onclick = e => updateStatistics(id, 'clicks')
     })
 
-    function updateStatistics(type, id) {
+    function updateStatistics(id, type) {
         db.collection('statistics').doc(id).get()
             .then(doc => {
                 if (doc.existis) {
@@ -246,7 +246,6 @@ function initStatistics() {
                     docData[type] += 1
                     db.collection('statistics').doc(id)
                         .update(docData)
-                    const day = new Date().toLocaleDateString().replace(/\//g, '-')
                 } else {
                     const docData = { clicks: 0, views: 0, prints: 0 }
                     docData[type] += 1
@@ -255,6 +254,7 @@ function initStatistics() {
                 }
                 db.collection(`statistics/${id}/byDay`).doc(day)
                     .get().then(doc => {
+                        const day = new Date().toLocaleDateString().replace(/\//g, '-')
                         if (doc.existis) {
                             const dataDay = doc.data()
                             data[type] += 1
