@@ -1,4 +1,4 @@
-const firebaseConfig = {
+const tvpcv = {
     apiKey: "AIzaSyA2UrVcfcR3_co-0SRvggAfritNB832t-4",
     authDomain: "send-mail-news.firebaseapp.com",
     projectId: "send-mail-news",
@@ -7,7 +7,7 @@ const firebaseConfig = {
     appId: "1:735458348101:web:9448e2b6fd09b61efee72c"
 }
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(tvpcv);
 
 const db = firebase.firestore();
 
@@ -246,12 +246,27 @@ function initStatistics() {
                     docData[type] += 1
                     db.collection('statistics').doc(id)
                         .update(docData)
+                    const day = new Date().toLocaleDateString().replace(/\//g, '-')
                 } else {
                     const docData = { clicks: 0, views: 0, prints: 0 }
                     docData[type] += 1
                     db.collection('statistics').doc(id)
                         .set(docData)
                 }
+                db.collection(`statistics/${id}/byDay`).doc(day)
+                    .get().then(doc => {
+                        if (doc.existis) {
+                            const dataDay = doc.data()
+                            data[type] += 1
+                            db.collection(`statistics/${id}/byDay`).doc(day)
+                                .update(dataDay)
+                        } else {
+                            const dataDay = { clicks: 0, views: 0, prints: 0 }
+                            data[type] += 1
+                            db.collection(`statistics/${id}/byDay`).doc(day)
+                                .set(dataDay)
+                        }
+                    })
             })
     }
 }
