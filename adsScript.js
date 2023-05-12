@@ -255,7 +255,7 @@ function initStatistics() {
                         .then(() => updateDayData(id, type))
                 }
                 function updateDayData(id, type) {
-                    const day = new Date().toLocaleDateString().replace(/\//g, '-')
+                    const day = formatDateString(new Date().toLocaleDateString().replace(/\//g, '-'))
                     db.collection(`statistics/${id}/byDay`).doc(day)
                         .get().then(doc => {
                             if (doc.exists) {
@@ -275,6 +275,13 @@ function initStatistics() {
                 }
             })
     }
+}
+
+function formatDateString(date) {
+    var day = parseInt(date.split("/")[0]);
+    var month = parseInt(date.split("/")[1]);
+    var year = parseInt(date.split("/")[2]);
+    return `${month}-${day}-${year}`
 }
 
 initRenderAds();
