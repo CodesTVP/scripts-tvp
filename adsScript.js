@@ -241,7 +241,7 @@ function initStatistics() {
     function updateStatistics(id, type) {
         db.collection('statistics').doc(id).get()
             .then(doc => {
-                if (doc.existis) {
+                if (doc.exists) {
                     const docData = doc.data()
                     docData[type] += 1
                     db.collection('statistics').doc(id)
@@ -255,7 +255,7 @@ function initStatistics() {
                 db.collection(`statistics/${id}/byDay`).doc(day)
                     .get().then(doc => {
                         const day = new Date().toLocaleDateString().replace(/\//g, '-')
-                        if (doc.existis) {
+                        if (doc.exists) {
                             const dataDay = doc.data()
                             data[type] += 1
                             db.collection(`statistics/${id}/byDay`).doc(day)
