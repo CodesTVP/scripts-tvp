@@ -1,3 +1,16 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyA2UrVcfcR3_co-0SRvggAfritNB832t-4",
+    authDomain: "send-mail-news.firebaseapp.com",
+    projectId: "send-mail-news",
+    storageBucket: "send-mail-news.appspot.com",
+    messagingSenderId: "735458348101",
+    appId: "1:735458348101:web:9448e2b6fd09b61efee72c"
+}
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
 function isPostPage() {
     const bodyClass = document.body.classList;
     return bodyClass.contains('item-view');
@@ -5,9 +18,9 @@ function isPostPage() {
 
 function getAds() {
     return new Promise((resolve, reject) => {
-        fetch('https://serve-ads.onrender.com')
-            .then((response) => response.json())
-            .then((json) => resolve(json))
+        db.collection('anunciantes').get()
+            .then((snapshot) => snapshot.docs.map(doc => doc.data()))
+            .then((array) => resolve(array))
             .catch((err) => reject(err));
     });
 }
@@ -27,25 +40,25 @@ function filterAds(object) {
         const ifPostPage = postPage && ad.pages.includes('post')
         const ifHomePage = !postPage && ad.pages.includes('home')
         if (ifPostPage || ifHomePage) {
-            if (ad.local.includes('anchor') && 
+            if (ad.local.includes('anchor') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsAnchor.push(ad);
-            if (ad.local.includes('header') && 
+            if (ad.local.includes('header') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsHeader.push(ad);
-            if (ad.local.includes('main') && 
+            if (ad.local.includes('main') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsMain.push(ad);
-            if (ad.local.includes('sidebar') && 
+            if (ad.local.includes('sidebar') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsSideBar.push(ad);
-            if (ad.local.includes('squares') && 
+            if (ad.local.includes('squares') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsSquares.push(ad);
-            if (ad.local.includes('footer') && 
+            if (ad.local.includes('footer') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsFooter.push(ad);
-            if (ad.local.includes('floating') && 
+            if (ad.local.includes('floating') &&
                 new Date() <= new Date(ad.validity))
                 ads.adsFloating.push(ad);
         }
@@ -212,7 +225,7 @@ function initStatistics() {
             if (entry.isIntersecting)
                 setTimeout(() => {
                     if (entry.isIntersecting)
-                        fetch(`https://serve-ads.onrender.com/post?type=views&id=${id}`, { method: 'POST' })
+                        updateStatistics(id, 'views')
                 }, 2000)
             else clearTimeout()
         })
@@ -221,12 +234,26 @@ function initStatistics() {
     ads.forEach(ad => {
         const id = ad.id
         observer.observe(ad);
-        fetch(`https://serve-ads.onrender.com/post?type=prints&id=${id}`, { method: 'POST' })
-        ad.onclick = e => {
-            console.log(e)
-            fetch(`https://serve-ads.onrender.com/post?type=clicks&id=${id}`, { method: 'POST' })
-        }
+        updateStatistics(id, 'prints')
+        ad.onclick = e => updateStatistics(id, 'clicks')
     })
+
+    function updateStatistics(type, id) {
+        db.collection('statistics').doc(id).get()
+            .then(doc => {
+                if (doc.existis) {
+                    const docData = doc.data()
+                    docData[type] += 1
+                    db.collection('statistics').doc(id)
+                        .update(docData)
+                } else {
+                    const docData = { clicks: 0, views: 0, prints: 0 }
+                    docData[type] += 1
+                    db.collection('statistics').doc(id)
+                        .set(docData)
+                }
+            })
+    }
 }
 
 initRenderAds();
