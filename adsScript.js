@@ -255,7 +255,7 @@ function initStatistics() {
                         .then(() => updateDayData(id, type))
                 }
                 function updateDayData(id, type) {
-                    const day = formatDateString(new Date().toLocaleDateString().replace(/\//g, '-'))
+                    const day = formatDateString(new Date().toLocaleDateString())
                     db.collection(`statistics/${id}/byDay`).doc(day)
                         .get().then(doc => {
                             if (doc.exists) {
