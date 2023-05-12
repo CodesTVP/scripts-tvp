@@ -246,27 +246,31 @@ function initStatistics() {
                     docData[type] += 1
                     db.collection('statistics').doc(id)
                         .update(docData)
+                        .then(() => updateDayData(id, type))
                 } else {
                     const docData = { clicks: 0, views: 0, prints: 0 }
                     docData[type] += 1
                     db.collection('statistics').doc(id)
                         .set(docData)
+                        .then(() => updateDayData(id, type))
                 }
-                const day = new Date().toLocaleDateString().replace(/\//g, '-')
-                db.collection(`statistics/${id}/byDay`).doc(day)
-                    .get().then(doc => {
-                        if (doc.exists) {
-                            const dataDay = doc.data()
-                            data[type] += 1
-                            db.collection(`statistics/${id}/byDay`).doc(day)
-                                .update(dataDay)
-                        } else {
-                            const dataDay = { clicks: 0, views: 0, prints: 0 }
-                            data[type] += 1
-                            db.collection(`statistics/${id}/byDay`).doc(day)
-                                .set(dataDay)
-                        }
-                    })
+                function updateDayData(id, type) {
+                    const day = new Date().toLocaleDateString().replace(/\//g, '-')
+                    db.collection(`statistics/${id}/byDay`).doc(day)
+                        .get().then(doc => {
+                            if (doc.exists) {
+                                const dataDay = doc.data()
+                                data[type] += 1
+                                db.collection(`statistics/${id}/byDay`).doc(day)
+                                    .update(dataDay)
+                            } else {
+                                const dataDay = { clicks: 0, views: 0, prints: 0 }
+                                data[type] += 1
+                                db.collection(`statistics/${id}/byDay`).doc(day)
+                                    .set(dataDay)
+                            }
+                        })
+                }
             })
     }
 }
