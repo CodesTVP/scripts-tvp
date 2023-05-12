@@ -256,22 +256,17 @@ function initStatistics() {
                 }
                 function updateDayData(id, type) {
                     const day = new Date().toLocaleDateString().replace(/\//g, '-')
-                    console.log('exec', day)
                     db.collection(`statistics/${id}/byDay`).doc(day)
                         .get().then(doc => {
                             if (doc.exists) {
                                 const dataDay = doc.data()
-                                console.log(dataDay)
-                                data[type] += 1
-                                console.log(dataDay)
+                                dataDay[type] += 1
                                 db.collection(`statistics/${id}/byDay`).doc(day)
                                     .update(dataDay)
                                     .catch(e => console.error(e))
                             } else {
                                 const dataDay = { clicks: 0, views: 0, prints: 0 }
-                                console.log(dataDay)
-                                data[type] += 1
-                                console.log(dataDay)
+                                dataDay[type] += 1
                                 db.collection(`statistics/${id}/byDay`).doc(day)
                                     .set(dataDay)
                                     .catch(e => console.error(e))
