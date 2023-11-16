@@ -2,9 +2,11 @@ async function generateHTML() {
     const response = await getData()
     document.querySelector('.loading-posts').style.display = 'none'
     const elem = document.querySelector('#insta-posts .content')
-    response.data.forEach(post => {
-        if (post.media_type === 'IMAGE' ||
-            post.media_type === 'CAROUSEL_ALBUM') {
+    response.data.forEach((post) => {
+        if (
+            post.media_type === 'IMAGE' ||
+            post.media_type === 'CAROUSEL_ALBUM'
+        ) {
             const postDiv = document.createElement('div')
             postDiv.classList.add('post')
 
@@ -23,22 +25,27 @@ async function generateHTML() {
     })
 }
 
-
 function getData() {
     function encrypt(text, displacement) {
-        return text.replace(/[a-z]/gi, letter => {
+        return text.replace(/[a-z]/gi, (letter) => {
             const code = letter.charCodeAt(0)
             const limit = letter.toUpperCase() === letter ? 65 : 97
-            return String.fromCharCode(((code - limit + displacement) % 26) + limit)
+            return String.fromCharCode(
+                ((code - limit + displacement) % 26) + limit
+            )
         })
     }
 
     return new Promise((resolve, reject) => {
-        const token = 'LJTYMZP1Q5fX5XPXwNOX9iT2sxX0B5PmkHYXYafAH3VHPbVIQBT3gqdZ9sdYQpTAkQCDnMzQH1AfqCDEBn5pYXILUX1ZQoUQYoIcWAQifHoOOAMGTp5HOWUMd2o2WZQkhXYzfp1IZZQ3'
-        fetch("https://graph.instagram.com/me/media?fields=media_type,media_url,permalink&limit=15&access_token=" + encrypt(token, (26 - 3) % 26))
-            .then(response => response.json())
-            .then(data => resolve(data))
-            .catch(error => reject(error))
+        const token =
+            'LJTZURXqCDSYqkMQJgtQmgiQKscZYM0U205XGIBCDJMuV3MyPHUxPqUKB004fqM4d3IEfYIHCDZUMUZCDSeKMCDeWkuWnfzVWT2hIn3XZsVZoCDSemgFf1QYVKgreogCDgmo2fqCDWPKUxVGkQVF1CDXTCGCG'
+        fetch(
+            'https://graph.instagram.com/me/media?fields=media_type,media_url,permalink&limit=15&access_token=' +
+                encrypt(token, (26 - 3) % 26)
+        )
+            .then((response) => response.json())
+            .then((data) => resolve(data))
+            .catch((error) => reject(error))
     })
 }
 
