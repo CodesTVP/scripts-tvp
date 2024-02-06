@@ -75,7 +75,7 @@ function displayAds(obj) {
     const adsFooterDiv = document.querySelector('.footer-ads');
     const adsFloatingDiv = document.querySelector('.floating-ads');
     adsOneAtATime(adsAnchorDiv, obj.adsAnchor);
-    adsMultipleAtATime(adsHeaderDiv, obj.adsHeader, 3);
+    adsOneAtATime(adsHeaderDiv, obj.adsHeader);
     adsMultipleAtATime(adsSidebarDiv, obj.adsSideBar, 5);
     adsMainDiv.forEach((div) => adsOneAtATime(div, obj.adsMain));
     adsMultipleAtATime(adsSquareDiv, obj.adsSquares, 6);
