@@ -38,7 +38,7 @@ function getData() {
 
     return new Promise((resolve, reject) => {
         const token =
-            'LJTZURVKjaZZYzeXLaRWn2QJ9EBqg6gXrzQmXwWoYYWHB1dmooY0MmCDXkzCDn5VRYL1WcYte2ayQZB2gHMQTV1kdAMHgJkAOAX3BZodV0MFTmQpUpsZeqkqYJoFB19pCDYYaCDnIJg2QZP3rzXTCGCG'
+            'LJTZURX1kPPYr3WKCDuQAHaY0guUmkSU0wZhKgyY0g3Wp5XdXBbhpsRYHgMWV16UKkvYpj4VJUTPI9uCDH5nUYjcVp1dg0QEBpgcYo9dQcUKeHkLQngSCDXU2fcEFUYCDJYZsiZHoShHwVPKLwgzCGCG'
         fetch(
             'https://graph.instagram.com/me/media?fields=media_type,media_url,permalink&limit=15&access_token=' +
             encrypt(token, (26 - 3) % 26)
